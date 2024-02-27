@@ -532,5 +532,21 @@ class model(object):
         print('recall is {}'.format(recall))
         print('f1 is {}'.format(f1))
 binarized_df= pd.read_csv(r"C:/Users/opvv1/OneDrive/Desktop/binlad/binpat/'binarized_trainAD.csv")
+binarized_df1= pd.read_csv(r"C:/Users/opvv1/OneDrive/Desktop/binlad/binpat/binarized_testAD.csv")
 model1= model()
 model1.train(binarized_df)
+predicted_df = model1.predict(binarized_df1)
+tp = sum(predicted_df['Marker'])
+fp = len(predicted_df['Marker']) - tp
+tn = len(binarized_df['Marker']) - len(predicted_df) - (sum(binarized_df['Marker']) -tp)
+fn = sum(binarized_df['Marker']) - tp
+accuracy = ((tp + tn)/(tp+ tn + fp + fn))*100
+precision = (tp/(tp+ fp))*100
+recall = (tp/(tp+fn))*100
+f1 = (2*precision*recall)/(precision + recall)
+print('accuracy is {}'.format(accuracy))
+print('precision is {}'.format(precision))
+print('recall is {}'.format(recall))
+print('f1 is {}'.format(f1))
+
+
